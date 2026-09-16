@@ -1,0 +1,2 @@
+import {defineConfig} from '@playwright/test';
+export default defineConfig({testDir:'./tests',testMatch:'ui.spec.js',timeout:60000,use:{baseURL:'http://127.0.0.1:4173',launchOptions:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE?{executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE}:{}},webServer:{command:'python3 -m http.server 4173 --directory public',port:4173,reuseExistingServer:true},reporter:'list'});

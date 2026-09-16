@@ -1,0 +1,23 @@
+{
+  "name": "cambio-live",
+  "version": "1.0.0",
+  "description": "Live multiplayer Cambio, with a static Netlify frontend and Supabase game engine",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "node tests/database.test.mjs && node tests/upgrade.test.mjs",
+    "test:ui": "playwright test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.8",
+    "@playwright/test": "1.63.0",
+    "esbuild": "0.28.2"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.116.0"
+  },
+  "private": true
+}

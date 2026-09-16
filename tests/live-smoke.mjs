@@ -1,0 +1,15 @@
+import {createClient} from '@supabase/supabase-js';import assert from 'node:assert/strict';import {SUPABASE_URL,SUPABASE_ANON_KEY} from '../public/config.js';
+const options={auth:{persistSession:false,autoRefreshToken:false}};const a=createClient(SUPABASE_URL,SUPABASE_ANON_KEY,options),b=createClient(SUPABASE_URL,SUPABASE_ANON_KEY,options);let code,events=0,channel;
+async function rpc(c,n,p={}){const {data,error}=await c.rpc(n,p);if(error)throw Error(n+': '+error.message);return data;}
+async function call(c,n,p={}){return rpc(c,n,{p_room_code:code,...p});}
+try{
+ for(const c of [a,b]){const {error}=await c.auth.signInAnonymously();if(error)throw error;}
+ code=(await rpc(a,'create_room',{p_name:'Release check A'})).room_code;await rpc(b,'join_room',{p_room_code:code,p_name:'Release check B'});
+ channel=b.channel('release-'+code).on('postgres_changes',{event:'*',schema:'public',table:'game_state',filter:'room_code=eq.'+code},()=>events++);
+ await new Promise((resolve,reject)=>{const timer=setTimeout(()=>reject(Error('Realtime subscription timeout')),15000);channel.subscribe(s=>{if(s==='SUBSCRIBED'){clearTimeout(timer);resolve();}else if(s==='CHANNEL_ERROR'){clearTimeout(timer);reject(Error('Realtime channel error'));}})});
+ await call(a,'start_game');await new Promise((resolve,reject)=>{const start=Date.now();const timer=setInterval(()=>{if(events>0){clearInterval(timer);resolve();}else if(Date.now()-start>12000){clearInterval(timer);reject(Error('Realtime event delivery timeout'));}},100);});assert.equal((await call(a,'get_initial_peek',{p_positions:[2,3]})).length,2);await call(a,'ready_for_round');await call(b,'ready_for_round');await assert.rejects(call(a,'get_initial_peek',{p_positions:[2,3]}));assert.equal((await call(b,'get_initial_peek',{p_positions:[2,3]})).length,2);
+ const drawn=await call(a,'draw_from',{p_source:'deck'});assert.equal((await call(a,'get_game_view')).drawn_label,drawn.card_label);await call(a,'resolve_draw',{p_mode:'replace',p_position:0});await assert.rejects(call(b,'get_initial_peek',{p_positions:[2]}));await call(b,'call_cambio');await call(a,'draw_from',{p_source:'discard'});await call(a,'resolve_draw',{p_mode:'replace',p_position:1});
+ const end=await call(a,'get_game_view');assert.equal(end.room.status,'round_over');assert.equal(end.revealed_cards.length,8);const scores=await call(a,'get_round_scores');assert.equal(scores.length,2);assert(scores.every(x=>x.total_score===x.round_score));assert(events>0,'No cross-client Realtime events');
+ await call(a,'return_to_lobby');await call(b,'leave_room');await call(a,'leave_room');console.log(JSON.stringify({passed:true,realtimeEvents:events,checks:'two anonymous players, create/join, initial peek lock, draw recovery, discard draw, Cambio, final reveal, scoring',testRoomRemoved:true}));
+}catch(e){console.error('Live test failed:',e.message,'Fixture room:',code);process.exitCode=1;}finally{if(channel)await b.removeChannel(channel);await a.auth.signOut();await b.auth.signOut();a.realtime.disconnect();b.realtime.disconnect();}
+process.exit(process.exitCode||0);
