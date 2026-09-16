@@ -12,3 +12,5 @@
 .mini-cards:has(.target){grid-template-columns:repeat(2,44px)}.mini-card.target{width:44px;min-height:44px}.mini-card:disabled{opacity:1}.opponent:has(.target){min-width:120px}
 .join-row button{white-space:nowrap;flex-shrink:0}
 .bot-controls h3{margin-bottom:5px}.bot-controls select{min-width:0;flex:1;border:1px solid var(--border);border-radius:10px;padding:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px}.remove-bot{min-width:44px;padding:4px;font-size:22px;border:1px solid var(--border)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+.brand-icon{width:48px;height:48px;object-fit:contain;border-radius:12px;flex-shrink:0;}
