@@ -3,7 +3,7 @@ import { PGlite } from '@electric-sql/pglite';
 import {readFileSync} from 'node:fs';
 const setup=`create role anon;create role authenticated;create schema auth;create function auth.uid() returns uuid language sql as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to authenticated;grant execute on function auth.uid() to authenticated;`;
 test('mobile table, private peek, turn lock, settings persistence, reconnect and scoring',async({browser},testInfo)=>{
- const db=new PGlite();await db.exec(setup);await db.exec(readFileSync('supabase/baseline.sql','utf8'));await db.exec(readFileSync('supabase/upgrade.sql','utf8'));
+ const db=new PGlite();await db.exec(setup);await db.exec(readFileSync('supabase/baseline.sql','utf8'));await db.exec(readFileSync('supabase/upgrade.sql','utf8'));await db.exec(readFileSync('supabase/bots.sql','utf8'));
  let queue=Promise.resolve();const pages=[];const errors=[];
  for(let n=1;n<=2;n++){
   const context=await browser.newContext({viewport:{width:390,height:844}});const page=await context.newPage();pages.push(page);page.on('pageerror',e=>errors.push(e.message));
@@ -23,9 +23,9 @@ test('mobile table, private peek, turn lock, settings persistence, reconnect and
  await a.getByRole('button',{name:'Your card 3',exact:true}).click();await expect(a.locator('#hand .face')).toHaveCount(1);await a.getByRole('button',{name:'I’m ready',exact:true}).click();await b.getByRole('button',{name:'I’m ready',exact:true}).click();
  await expect(a.locator('#turnText')).toHaveText('Your move.');await expect(a.locator('#hand .face')).toHaveCount(0);
  await b.getByRole('button',{name:'Your card 3',exact:true}).click();await expect(b.locator('#hand .face')).toHaveCount(1);
- await a.getByRole('button',{name:'Draw from deck'}).click();await expect(a.locator('#actionPanel')).toContainText('You drew');await a.reload();await expect(a.locator('#actionPanel')).toContainText('You drew');await a.getByRole('button',{name:'Your card 1',exact:true}).click();
+ await a.getByRole('button',{name:'Draw from deck'}).click();await expect(a.locator('#actionPanel')).toContainText('You drew');await a.reload();await expect(a.locator('#actionPanel')).toContainText('You drew');await a.getByRole('button',{name:'Your card 1',exact:true}).click();await a.getByRole('button',{name:'Replace selected card',exact:true}).click();
  await expect(b.locator('#turnText')).toHaveText('Your move.');await expect(b.locator('#hand .face')).toHaveCount(0);await b.screenshot({path:testInfo.outputPath('table-mobile.png'),fullPage:true});
- await b.getByRole('button',{name:/Call Cambio/}).click();await expect(a.locator('#turnText')).toHaveText('Your move.');await a.getByRole('button',{name:'Draw from deck'}).click();await a.getByRole('button',{name:'Your card 1',exact:true}).click();await expect(a.locator('#roundView')).toBeVisible();await expect(a.locator('.score-row')).toHaveCount(2);
+ await b.getByRole('button',{name:/Call Cambio/}).click();await expect(a.locator('#turnText')).toHaveText('Your move.');await a.getByRole('button',{name:'Draw from deck'}).click();await a.getByRole('button',{name:'Your card 1',exact:true}).click();await a.getByRole('button',{name:'Replace selected card',exact:true}).click();await expect(a.locator('#roundView')).toBeVisible();await expect(a.locator('.score-row')).toHaveCount(2);
  for(const p of pages){expect(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await p.context().close();}
  expect(errors).toEqual([]);await db.close();
 });

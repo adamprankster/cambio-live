@@ -1,3 +1,17 @@
+# Current live release
+
+Live: https://cambio-live.netlify.app
+
+Hosts can add or remove bots in the lobby (Easy, Medium, Hard), with up to six total human/bot seats. Bots remember only legitimately seen cards; lower difficulties forget. Bot turns run while a human has the room open and resume when someone returns.
+
+Draw only from the deck. To slam, tap your card then the discard pile, including after discarding your own draw. Wrong matches add a hidden penalty card. Selecting a card also enables an explicit replace/peek/swap action when appropriate. The supplied image is the favicon, home-screen icon and manifest icon.
+
+The additive `supabase/bots.sql` migration has been applied to production. Existing rooms are retained. No manual Supabase steps are required for this release. Fresh installations apply baseline.sql, upgrade.sql, then bots.sql, once each. Do not rerun migrations on the live database.
+
+Validation: database regression tests, bot/mixed-room tests, own-discard slams (normal and power cards), deck-only enforcement, local browser game checks.
+
+---
+
 # Cambio Live
 
 Updated static web app and Supabase game engine, recovered from the existing Netlify deployment and audited against the live database on September 15, 2026.
@@ -14,7 +28,7 @@ The source was recovered from the existing Netlify deployment because the GitHub
 
 - Server-enforced initial peek: only bottom positions 3 and 4, available repeatedly until each player's first turn starts. A ready stage gives the first player time to memorize their cards. Peeked cards hide at the turn boundary, on backgrounding, and when the table changes.
 - New responsive home, lobby, table and results screens. Four persistent device themes: Garden club, After hours, Wild berry and Golden hour. Settings and rules open without leaving a game.
-- Draw from either pile, replace any existing card including penalties, or discard the drawn card. A power activates only when the drawn card is discarded, from either source, following the supplied rules.
+- Draw from the deck, replace any existing card including penalties, or discard the drawn card. A power activates only when the drawn card is discarded.
 - 7/8 own peek; 9/10 opponent peek; J/Q blind swap; black King opponent peek followed by an optional swap; red King worth −1 with no power. Powers can be skipped. Private powers are validated and consumed by the server.
 - Out-of-turn slams match ranks. Wrong guesses retain the original card and add one hidden penalty. Stale discard attempts are rejected without a penalty. Empty slots remain empty.
 - Cambio before drawing, exactly one final turn for every other player, final card reveal and score breakdowns. Defaults: successful caller −5, wrong/tied caller +10, match ends when someone reaches 50. Hosts can edit those amounts in the lobby. Lowest total wins; overall ties share the win.
@@ -31,7 +45,7 @@ The upgrade is already applied to [Cambio Live](https://supabase.com/dashboard/p
 
 ### Fresh Supabase projects only
 
-Run `supabase/baseline.sql` and then `supabase/upgrade.sql`. Enable anonymous sign-ins and update `public/config.js` for that project. The baseline is a reconstruction of the live schema, not the stale SQL previously hosted on Netlify.
+Run `supabase/baseline.sql`, then `supabase/upgrade.sql`, then `supabase/bots.sql`. Enable anonymous sign-ins and update `public/config.js` for that project. The baseline is a reconstruction of the live schema, not the stale SQL previously hosted on Netlify.
 
 ## Netlify deployment
 

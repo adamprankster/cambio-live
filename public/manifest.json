@@ -3,7 +3,14 @@
   "short_name": "Cambio",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#0b0b0c",
-  "theme_color": "#111111",
-  "icons": []
+  "background_color": "#f7f7ef",
+  "theme_color": "#123d32",
+  "icons": [
+    {
+      "src": "app-icon.png",
+      "sizes": "1254x1254",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
 }

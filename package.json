@@ -4,7 +4,7 @@
   "description": "Live multiplayer Cambio, with a static Netlify frontend and Supabase game engine",
   "scripts": {
     "build": "node build.mjs",
-    "test": "node tests/database.test.mjs && node tests/upgrade.test.mjs",
+    "test": "node tests/database.test.mjs && node tests/upgrade.test.mjs && node tests/bots.test.mjs",
     "test:ui": "playwright test"
   },
   "keywords": [],
