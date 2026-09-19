@@ -1,0 +1,7 @@
+{
+  "appId": "com.cambiolive.app",
+  "appName": "Cambio Live",
+  "webDir": "public",
+  "ios": {"contentInset": "never", "backgroundColor": "#f7f7ef", "preferredContentMode": "mobile", "webContentsDebuggingEnabled": false},
+  "server": {"hostname": "localhost", "iosScheme": "capacitor"}
+}

@@ -1,3 +1,11 @@
+# iPhone / App Store project
+
+The game now includes a Capacitor 8.5.2 iOS project. Start with [app-store/SUBMISSION.md](app-store/SUBMISSION.md). Run `sh scripts/prepare-ios.sh` to prepare/open Xcode. Native and web clients use the same screens, bundled fonts and live backend.
+
+**Not yet a signed/uploadable release:** Xcode is not installed here; Apple team, publisher name and support email remain unset. Device testing, real screenshots, signing and App Store validation are still required. The release check reports these blockers rather than presenting an untested archive as complete.
+
+The guest deletion migration is additive and has its own regression tests. Run all tests with `npm test`. Build and native asset parity are checked with `npm run ios:sync && npm run ios:check`.
+
 # Current live release
 
 Live: https://cambio-live.netlify.app

@@ -1,5 +1,7 @@
 import { createClient } from './vendor/supabase.js';
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
+import {copyText,watchAppState} from './vendor/native.js';
+import {supportEmail,developerName} from './store-config.js';
 const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const $=id=>document.getElementById(id);
 const storage={get(k){try{return localStorage.getItem('cambio.'+k)}catch{return null}},set(k,v){try{v===null?localStorage.removeItem('cambio.'+k):localStorage.setItem('cambio.'+k,v)}catch{}}};
@@ -50,9 +52,17 @@ function bind(id,fn){$(id).dataset.action='true';$(id).addEventListener('click',
 function name(){const value=$('playerName').value.trim().replace(/\s+/g,' ');if(!value)throw Error('Enter your name first.');storage.set('name',value);return value;}
 bind('createBtn',async()=>{const n=name();await auth();const r=await rpc('create_room',{p_name:n});await enter(r.room_code);});
 bind('joinBtn',async()=>{const n=name(),code=$('roomCode').value.toUpperCase();if(!/^[A-Z0-9]{6}$/.test(code))throw Error('Enter the six-character room code.');await auth();await rpc('join_room',{p_room_code:code,p_name:n});await enter(code);});
-bind('copyCode',async()=>{try{await navigator.clipboard.writeText(state.code);status('Room code copied.');}catch{status('Your room code is '+state.code);}});
+bind('copyCode',async()=>{try{await copyText(state.code);status('Room code copied.');}catch{status('Your room code is '+state.code);}});
 bind('saveRulesBtn',async()=>{await call('set_room_rules',{p_score_limit:Number($('scoreLimit').value),p_caller_bonus:Number($('callBonus').value),p_caller_penalty:Number($('callPenalty').value)});$('roomRules').open=false;status('Table rules saved.');});bind('newMatchBtn',()=>call('new_match'));bind('addBotBtn',()=>call('add_bot',{p_difficulty:$('botDifficulty').value}));bind('startBtn',()=>call('start_game'));bind('deckBtn',async()=>{state.selected=null;const r=await call('draw_from',{p_source:'deck'});if(r.passed)status('No cards left to draw. Your turn passes.');});bind('discardBtn',slamSelected);bind('cambioBtn',()=>call('call_cambio'));bind('nextBtn',()=>call('next_round'));bind('lobbyBtn',()=>call('return_to_lobby'));bind('disconnectBtn',disconnect);
 for(const id of ['leaveLobbyBtn','leaveRoundBtn'])bind(id,async()=>{await call('leave_room');await disconnect();});
 $('playerName').value=storage.get('name')||'';$('roomCode').addEventListener('input',e=>{e.target.value=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'');});
 document.addEventListener('visibilitychange',()=>{if(document.hidden){hideInitial();closePeek();if(state.view?.room.status==='playing')renderHand();}else refresh();});window.addEventListener('online',refresh);setInterval(()=>{if(!document.hidden)refresh();},2000);
 (async()=>{const code=storage.get('room');if(code){try{await auth();await enter(code);}catch(e){status(errorMessage(e));}}})();
+
+watchAppState(active=>{if(active){db.auth.startAutoRefresh();refresh();}else{db.auth.stopAutoRefresh();hideInitial();closePeek();if(state.view?.room.status==='playing')renderHand();}});
+$('privacyBtn').onclick=()=>$('privacyDialog').showModal();
+$('supportBtn').onclick=()=>{if(supportEmail)location.href='mailto:'+supportEmail;else{$('supportDialog').showModal();}};
+$('privacyContact').textContent=supportEmail?'Privacy contact: '+supportEmail:'Support contact will be provided before the App Store release.';
+$('privacyOperator').textContent=developerName?'Operated by '+developerName+'.':'';
+$('deleteDataBtn').onclick=()=>$('deleteDataDialog').showModal();
+bind('confirmDeleteDataBtn',async()=>{const {data,error}=await db.auth.getSession();if(error)throw error;if(data.session)await rpc('delete_guest_account');await db.auth.signOut({scope:'local'});await disconnect();for(const key of ['name','room','theme'])storage.set(key,null);$('playerName').value='';setTheme('forest');$('deleteDataDialog').close();$('settingsDialog').close();status('Your guest account and saved personal data have been deleted. Joining a table creates a new guest account.');});

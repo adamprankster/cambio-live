@@ -4,19 +4,30 @@
   "description": "Live multiplayer Cambio, with a static Netlify frontend and Supabase game engine",
   "scripts": {
     "build": "node build.mjs",
-    "test": "node tests/database.test.mjs && node tests/upgrade.test.mjs && node tests/bots.test.mjs",
-    "test:ui": "playwright test"
+    "test": "node tests/database.test.mjs && node tests/upgrade.test.mjs && node tests/bots.test.mjs && node tests/account-deletion.test.mjs",
+    "test:ui": "playwright test",
+    "ios:sync": "npm run build && cap sync ios",
+    "ios:open": "cap open ios",
+    "ios:check": "node scripts/check-ios.mjs",
+    "ios:release-check": "node scripts/check-ios.mjs --release"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "devDependencies": {
+    "@capacitor/cli": "8.5.2",
     "@electric-sql/pglite": "0.5.8",
     "@playwright/test": "1.63.0",
     "esbuild": "0.28.2"
   },
   "dependencies": {
+    "@capacitor/app": "8.1.1",
+    "@capacitor/clipboard": "8.0.1",
+    "@capacitor/core": "8.5.2",
+    "@capacitor/ios": "8.5.2",
+    "@fontsource-variable/dm-sans": "5.3.0",
+    "@fontsource-variable/manrope": "5.3.0",
     "@supabase/supabase-js": "2.116.0"
   },
   "private": true

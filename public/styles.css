@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+@font-face{font-family:'DM Sans';font-style:normal;font-weight:100 1000;font-display:swap;src:url('fonts/dm-sans.woff2') format('woff2')}
+@font-face{font-family:Manrope;font-style:normal;font-weight:200 800;font-display:swap;src:url('fonts/manrope.woff2') format('woff2')}
 :root{--bg:#f7f7ef;--ink:#173f33;--muted:#6b796e;--accent:#d8ee9b;--table:#174a3b;--table-deep:#123d32;--surface:#fffef8;--border:#dbe1d4;--red:#a33c48;--shadow:0 20px 70px #233c2910;color-scheme:light}
 :root[data-theme=midnight]{--bg:#101a29;--ink:#e8edf7;--muted:#a5b2c9;--accent:#b9cff8;--table:#233856;--table-deep:#1b2d49;--surface:#1a293e;--border:#34455f;--red:#e5a0a9;color-scheme:dark}
 :root[data-theme=plum]{--bg:#f8f1f5;--ink:#532948;--muted:#87707f;--accent:#edc6da;--table:#643753;--table-deep:#4e2842;--surface:#fff9fc;--border:#e6d7e1;--red:#aa3f55}
@@ -14,3 +15,6 @@
 .bot-controls h3{margin-bottom:5px}.bot-controls select{min-width:0;flex:1;border:1px solid var(--border);border-radius:10px;padding:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px}.remove-bot{min-width:44px;padding:4px;font-size:22px;border:1px solid var(--border)}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 .brand-icon{width:48px;height:48px;object-fit:contain;border-radius:12px;flex-shrink:0;}
+
+.native-app body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
+.settings-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.settings-links button{font-size:13px}.danger{color:var(--red)}
