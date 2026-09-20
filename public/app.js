@@ -1,3 +1,4 @@
+import {showRoomCreatedAd} from './ads.js';
 import { createClient } from './vendor/supabase.js';
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 import {copyText,watchAppState} from './vendor/native.js';
@@ -50,7 +51,7 @@ for(const [id,name,color] of themes){const b=button('',()=>setTheme(id),'theme-c
 $('settingsBtn').onclick=()=>$('settingsDialog').showModal();$('rulesBtn').onclick=()=>$('rulesDialog').showModal();for(const b of document.querySelectorAll('.close-dialog'))b.onclick=()=>{b.closest('dialog').close();if(b.closest('dialog').id==='peekDialog')closePeek();};$('peekDialog').addEventListener('close',()=>{clearTimeout(state.peekTimer);$('peekLabel').textContent='';});
 function bind(id,fn){$(id).dataset.action='true';$(id).addEventListener('click',()=>act(fn));}
 function name(){const value=$('playerName').value.trim().replace(/\s+/g,' ');if(!value)throw Error('Enter your name first.');storage.set('name',value);return value;}
-bind('createBtn',async()=>{const n=name();await auth();const r=await rpc('create_room',{p_name:n});await enter(r.room_code);});
+bind('createBtn',async()=>{const n=name();await auth();const r=await rpc('create_room',{p_name:n});storage.set('room',r.room_code);try{await showRoomCreatedAd(r.room_code);}finally{await enter(r.room_code);}});
 bind('joinBtn',async()=>{const n=name(),code=$('roomCode').value.toUpperCase();if(!/^[A-Z0-9]{6}$/.test(code))throw Error('Enter the six-character room code.');await auth();await rpc('join_room',{p_room_code:code,p_name:n});await enter(code);});
 bind('copyCode',async()=>{try{await copyText(state.code);status('Room code copied.');}catch{status('Your room code is '+state.code);}});
 bind('saveRulesBtn',async()=>{await call('set_room_rules',{p_score_limit:Number($('scoreLimit').value),p_caller_bonus:Number($('callBonus').value),p_caller_penalty:Number($('callPenalty').value)});$('roomRules').open=false;status('Table rules saved.');});bind('newMatchBtn',()=>call('new_match'));bind('addBotBtn',()=>call('add_bot',{p_difficulty:$('botDifficulty').value}));bind('startBtn',()=>call('start_game'));bind('deckBtn',async()=>{state.selected=null;const r=await call('draw_from',{p_source:'deck'});if(r.passed)status('No cards left to draw. Your turn passes.');});bind('discardBtn',slamSelected);bind('cambioBtn',()=>call('call_cambio'));bind('nextBtn',()=>call('next_round'));bind('lobbyBtn',()=>call('return_to_lobby'));bind('disconnectBtn',disconnect);
