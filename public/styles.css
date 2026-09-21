@@ -18,3 +18,46 @@
 
 .native-app body{padding-top:env(safe-area-inset-top);padding-left:env(safe-area-inset-left);padding-right:env(safe-area-inset-right)}
 .settings-links{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}.settings-links button{font-size:13px}.danger{color:var(--red)}
+
+/* Compact home screen; other screens and keyboard/large-text scrolling remain usable. */
+@media(max-width:700px), (max-width:1000px) and (max-height:500px){
+ body.home-screen .site-header{padding:8px 16px;min-height:62px}
+ body.home-screen main{min-height:0;padding:0 0 calc(12px + env(safe-area-inset-bottom));margin:0 16px}
+ body.home-screen .home.active{display:flex;flex-direction:column;gap:12px;min-height:0}
+ body.home-screen .hero{padding:0}
+ body.home-screen .hero-cards{height:clamp(80px,15svh,128px);margin:2px 0 8px}
+ body.home-screen .decor-card{height:88px;width:62px;border-radius:9px}
+ body.home-screen .decor-card.back{transform:translateX(-47px) rotate(-17deg);font-size:34px;border-width:4px}
+ body.home-screen .decor-card.last{transform:translateX(47px) rotate(18deg)}
+ body.home-screen .decor-card.face strong{font-size:34px}
+ body.home-screen .decor-card.face span{font-size:10px;top:5px;left:7px}
+ body.home-screen .decor-card.face small{display:none}
+ body.home-screen .game-facts{font-size:12px;gap:4px;line-height:1.4;justify-content:center}
+ body.home-screen .game-facts span:before{display:none}
+ body.home-screen .game-facts span:not(:first-child){display:none}
+ body.home-screen .join-panel{padding:12px 16px;border-radius:18px;max-width:460px}
+ body.home-screen .join-panel .eyebrow,body.home-screen .fine-print,body.home-screen .site-footer{display:none}
+ body.home-screen .join-panel h2{font-size:24px;line-height:1.2;margin:0 0 4px}
+ body.home-screen .join-panel label{font-size:12px;line-height:18px;margin:8px 0 4px}
+ body.home-screen .join-panel input{height:44px;padding:10px 12px}
+ body.home-screen .join-panel button{min-height:44px;padding:9px 14px}
+ body.home-screen .join-panel .full{margin-top:8px}
+ body.home-screen .divider{margin-top:10px;line-height:16px}
+ body.home-screen .status{margin-top:8px}
+}
+@media(max-width:700px) and (max-height:650px), (max-width:1000px) and (max-height:500px){
+ body.home-screen .hero-cards{display:none}
+ body.home-screen .hero{padding:4px 0}
+ body.home-screen .home.active{gap:8px}
+}
+
+@media(min-width:480px) and (max-width:1000px) and (max-height:500px){
+ body.home-screen .join-panel{display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;max-width:680px;width:100%}
+ body.home-screen .join-panel h2{grid-column:1 / -1;font-size:21px}
+ body.home-screen label[for=playerName]{grid-column:1;grid-row:2;margin:0}
+ body.home-screen #playerName{grid-column:1;grid-row:3}
+ body.home-screen #createBtn{grid-column:1;grid-row:4;margin:0}
+ body.home-screen label[for=roomCode]{grid-column:2;grid-row:2;margin:0}
+ body.home-screen .join-panel .join-row{grid-column:2;grid-row:3 / 5;align-self:start}
+ body.home-screen .divider{display:none}
+}

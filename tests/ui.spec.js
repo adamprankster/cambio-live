@@ -13,7 +13,7 @@ test('mobile table, private peek, turn lock, settings persistence, reconnect and
   await page.goto('/');
  }
  const [a,b]=pages;
- await expect(a.getByRole('heading',{name:'Cambio',exact:true})).toBeVisible();
+ await expect(a.getByRole('heading',{name:'Play Cambio',exact:true})).toBeVisible();
  await a.screenshot({path:testInfo.outputPath('home-mobile.png'),fullPage:true});
  await a.getByRole('button',{name:'Settings',exact:true}).click();await a.getByRole('button',{name:'After hours'}).click();await a.getByRole('button',{name:'Close settings'}).click();await a.reload();await expect(a.locator('html')).toHaveAttribute('data-theme','midnight');
  await a.getByRole('button',{name:'Settings',exact:true}).click();await a.getByRole('button',{name:'Garden club'}).click();await a.screenshot({path:testInfo.outputPath('settings-mobile.png')});await a.getByRole('button',{name:'Close settings'}).click();

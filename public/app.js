@@ -9,7 +9,7 @@ const storage={get(k){try{return localStorage.getItem('cambio.'+k)}catch{return 
 const state={code:null,view:null,channel:null,busy:false,refreshing:false,refreshAgain:false,epoch:0,selected:null,selectedDiscardOrder:null,initial:{},peekTimer:null,round:null,botTicking:false};
 const themes=[['forest','Garden club','#174a3b'],['midnight','After hours','#233856'],['plum','Wild berry','#643753'],['sand','Golden hour','#6a5941']];
 function status(text=''){$('status').textContent=text;}
-function show(id){for(const el of document.querySelectorAll('.view'))el.classList.toggle('active',el.id===id);}
+function show(id){document.body.classList.toggle('home-screen',id==='homeView');for(const el of document.querySelectorAll('.view'))el.classList.toggle('active',el.id===id);}
 function button(label,action,className=''){const b=document.createElement('button');b.textContent=label;b.className=className;b.dataset.action='true';b.addEventListener('click',()=>act(action));return b;}
 function text(tag,value,className=''){const el=document.createElement(tag);el.textContent=value;el.className=className;return el;}
 function errorMessage(e){if(/anonymous.*disabled/i.test(e.message))return 'Guest sign-in is disabled. Enable Anonymous Sign-Ins in the Supabase dashboard.';if(/get_game_view|ready_for_round|draw_from/.test(e.message)&&/function|schema cache/i.test(e.message))return 'The game update needs its matching database update. Please ask the host to finish setup.';return e.message||'Connection interrupted. Please try again.';}
