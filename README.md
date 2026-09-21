@@ -14,7 +14,7 @@ Hosts can add or remove bots in the lobby (Easy, Medium, Hard), with up to six t
 
 Draw only from the deck. To slam, tap your card then the discard pile, including after discarding your own draw. Wrong matches add a hidden penalty card. Selecting a card also enables an explicit replace/peek/swap action when appropriate. The supplied image is the favicon, home-screen icon and manifest icon.
 
-The additive `supabase/bots.sql` migration has been applied to production. Existing rooms are retained. No manual Supabase steps are required for this release. Fresh installations apply baseline.sql, upgrade.sql, then bots.sql, once each. Do not rerun migrations on the live database.
+The additive `supabase/bots.sql` migration has been applied to production. Existing rooms are retained. No manual Supabase steps are required for this release. Fresh installations apply baseline.sql, upgrade.sql, bots.sql, then every file in supabase/migrations in filename order, once each. Do not rerun migrations on the live database.
 
 Validation: database regression tests, bot/mixed-room tests, own-discard slams (normal and power cards), deck-only enforcement, local browser game checks.
 
@@ -100,3 +100,7 @@ You can set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to an installed Chromium/Chrome exe
 - The initial peek cannot make a player forget information they legitimately saw or cached earlier. The server prevents new unauthorized reads after the first-turn boundary.
 - The live two-client smoke test passed with six cross-client Realtime events. The bundled `tests/live-smoke.mjs` can repeat that check; it creates two guest users and an isolated room, then removes that room after passing.
 - The bonus and penalty amounts were unspecified in the original request. The default is −5/+10, with a default limit of 50; all are adjustable by the host.
+
+## Rules screen and jokers
+
+After the host deals, each player sees the supplied rules sheet. Tap “Play smart. Play Cambio.” to enter the table, peek, and get ready. Every new round uses 54 cards, including two jokers worth zero with no special power; jokers match one another for slamming. The additive jokers migration preserves cards in existing rounds.

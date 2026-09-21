@@ -3,7 +3,7 @@ import { PGlite } from '@electric-sql/pglite';
 import {readFileSync} from 'node:fs';
 const setup=`create role anon;create role authenticated;create schema auth;create function auth.uid() returns uuid language sql as $$select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid$$;grant usage on schema auth to authenticated;grant execute on function auth.uid() to authenticated;`;
 test('mobile table, private peek, turn lock, settings persistence, reconnect and scoring',async({browser},testInfo)=>{
- const db=new PGlite();await db.exec(setup);await db.exec(readFileSync('supabase/baseline.sql','utf8'));await db.exec(readFileSync('supabase/upgrade.sql','utf8'));await db.exec(readFileSync('supabase/bots.sql','utf8'));
+ const db=new PGlite();await db.exec(setup);await db.exec(readFileSync('supabase/baseline.sql','utf8'));await db.exec(readFileSync('supabase/upgrade.sql','utf8'));await db.exec(readFileSync('supabase/bots.sql','utf8'));await db.exec(readFileSync('supabase/migrations/20260921165500_jokers.sql','utf8'));
  let queue=Promise.resolve();const pages=[];const errors=[];
  for(let n=1;n<=2;n++){
   const context=await browser.newContext({viewport:{width:390,height:844}});const page=await context.newPage();pages.push(page);page.on('pageerror',e=>errors.push(e.message));
@@ -19,7 +19,7 @@ test('mobile table, private peek, turn lock, settings persistence, reconnect and
  await a.getByRole('button',{name:'Settings',exact:true}).click();await a.getByRole('button',{name:'Garden club'}).click();await a.screenshot({path:testInfo.outputPath('settings-mobile.png')});await a.getByRole('button',{name:'Close settings'}).click();
  await a.getByLabel('What should we call you?').fill('Alex');await a.getByRole('button',{name:/Create a table/}).click();await expect(a.locator('#lobbyView')).toBeVisible();const code=await a.locator('#copyCode').textContent();
  await b.getByLabel('What should we call you?').fill('Jordan');await b.getByLabel('Six-character room code').fill(code);await b.getByRole('button',{name:'Join →',exact:true}).click();await expect(b.locator('#lobbyView')).toBeVisible();
- await expect(a.locator('#startBtn')).toBeEnabled();await a.locator('#startBtn').click();await expect(a.locator('#gameView')).toBeVisible();await expect(b.locator('#gameView')).toBeVisible();
+ await expect(a.locator('#startBtn')).toBeEnabled();await a.locator('#startBtn').click();for(const p of [a,b]){await expect(p.locator('#dealIntroView')).toBeVisible();await p.getByRole('button',{name:'Play smart. Play Cambio.',exact:true}).click();}await expect(a.locator('#gameView')).toBeVisible();await expect(b.locator('#gameView')).toBeVisible();
  await a.getByRole('button',{name:'Your card 3',exact:true}).click();await expect(a.locator('#hand .face')).toHaveCount(1);await a.getByRole('button',{name:'I’m ready',exact:true}).click();await b.getByRole('button',{name:'I’m ready',exact:true}).click();
  await expect(a.locator('#turnText')).toHaveText('Your move.');await expect(a.locator('#hand .face')).toHaveCount(0);
  await b.getByRole('button',{name:'Your card 3',exact:true}).click();await expect(b.locator('#hand .face')).toHaveCount(1);

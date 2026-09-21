@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';import {readFileSync,existsSync,readdirSync,statSync} from 'node:fs';import {spawnSync} from 'node:child_process';import {createHash} from 'node:crypto';
 const config=JSON.parse(readFileSync('capacitor.config.json'));assert.equal(config.webDir,'public');assert(!config.server?.url,'App must bundle its screens, not load a remote website');assert.equal(config.ios.webContentsDebuggingEnabled,false);
 const hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
-for(const f of ['index.html','app.js','ads.js','ads-provider.js','styles.css','config.js','store-config.js','vendor/supabase.js','vendor/native.js','fonts/dm-sans.woff2','fonts/manrope.woff2'])assert.equal(hash('public/'+f),hash('ios/App/App/public/'+f),'iOS assets out of sync: '+f);
+for(const f of ['index.html','app.js','ads.js','ads-provider.js','deal-intro.js','deal-rules.png','styles.css','config.js','store-config.js','vendor/supabase.js','vendor/native.js','fonts/dm-sans.woff2','fonts/manrope.woff2'])assert.equal(hash('public/'+f),hash('ios/App/App/public/'+f),'iOS assets out of sync: '+f);
 const icon=readFileSync('ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png');assert.equal(icon.readUInt32BE(16),1024);assert.equal(icon.readUInt32BE(20),1024);assert(![4,6].includes(icon[25]),'App Store icon must not have an alpha channel');
 const proj=readFileSync('ios/App/App.xcodeproj/project.pbxproj','utf8');assert(proj.includes('PrivacyInfo.xcprivacy in Resources'));assert.equal((proj.match(/PrivacyInfo.xcprivacy in Resources/g)||[]).length,2);
 const info=readFileSync('ios/App/App/Info.plist','utf8');assert(info.includes('ITSAppUsesNonExemptEncryption'));assert(!info.includes('NSAllowsArbitraryLoads'));
