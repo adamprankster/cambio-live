@@ -101,3 +101,7 @@ body.deal-screen .site-footer{display:none}
 
 /* Prominent exit controls in the lobby, game and results. */
 #leaveLobbyBtn,#leaveRoundBtn,#disconnectBtn{min-height:58px;padding:16px 20px;font-size:17px;font-weight:700;border:1px solid var(--border);background:var(--surface);border-radius:14px}
+
+.swap-notice{position:fixed;z-index:1000;top:calc(14px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 28px);padding:16px 22px;border-radius:16px;background:var(--ink);color:var(--bg);border:2px solid var(--accent);box-shadow:0 8px 30px #0003;font-size:16px;font-weight:700;text-align:center;pointer-events:none}
+.swap-highlight{outline:4px solid #d5a54b!important;outline-offset:4px;box-shadow:0 0 20px #d5a54b99!important}
+.swap-ghost{position:fixed;z-index:999;display:flex;align-items:center;justify-content:center;border:3px solid #fffef5;border-radius:10px;background:var(--table);color:var(--accent);font-size:30px;box-shadow:0 8px 24px #0004;pointer-events:none}
