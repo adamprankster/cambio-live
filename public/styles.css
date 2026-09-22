@@ -105,3 +105,73 @@ body.deal-screen .site-footer{display:none}
 .swap-notice{position:fixed;z-index:1000;top:calc(14px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 28px);padding:16px 22px;border-radius:16px;background:var(--ink);color:var(--bg);border:2px solid var(--accent);box-shadow:0 8px 30px #0003;font-size:16px;font-weight:700;text-align:center;pointer-events:none}
 .swap-highlight{outline:4px solid #d5a54b!important;outline-offset:4px;box-shadow:0 0 20px #d5a54b99!important}
 .swap-ghost{position:fixed;z-index:999;display:flex;align-items:center;justify-content:center;border:3px solid #fffef5;border-radius:10px;background:var(--table);color:var(--accent);font-size:30px;box-shadow:0 8px 24px #0004;pointer-events:none}
+
+/* Play controls first, with opponents beneath the hand. */
+.game-core{display:flex;flex-direction:column;gap:12px}
+.game-core .game-heading{margin-bottom:0}
+.game-core .hand-hint{margin:0;min-height:0}
+.game-core .hand-hint:empty,.action-panel:empty{display:none}
+.game-core .game-footer{margin:0;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.game-core #disconnectBtn{margin:0}
+#disconnectBtn span{display:block;font-size:11px;font-weight:400}
+.game-core .cambio-button{min-width:0}
+.game .opponents{margin-top:16px}
+body.game-screen .site-footer{display:none}
+@media(max-width:700px){
+ body.game-screen{--hand-height:clamp(72px,12svh,106px)}
+ body.game-screen .site-header{padding:4px 12px;min-height:50px}
+ body.game-screen .site-header .wordmark{font-size:22px}
+ body.game-screen .site-header .brand-mark{font-size:28px}
+ body.game-screen main{padding:0 0 calc(10px + env(safe-area-inset-bottom));margin:0 12px;min-height:0}
+ .game{margin:0 auto}
+ .game-core{gap:8px}
+ .game-heading{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:var(--bg);padding:6px 0;gap:8px}
+ .game-heading h1{font-size:clamp(18px,5vw,23px);line-height:1.2;letter-spacing:-.6px}
+ .game-heading .eyebrow{font-size:8px;margin:0 0 2px;line-height:1.2}
+ .game-heading .badge{font-size:9px;padding:4px 8px}
+ .game-core .notice{padding:6px 10px;font-size:12px;margin:0}
+ .game-core .felt{padding:10px 12px;border-radius:18px}
+ .game-core .felt-top{display:none}
+ .game-core .piles{padding:0;gap:32px}
+ .game-core .pile{height:clamp(76px,12svh,106px);width:clamp(62px,9svh,78px);padding:8px}
+ .game-core .pile.back strong{font-size:36px}
+ .game-core .piles p{font-size:8px;margin:5px 0 0;line-height:1.2;letter-spacing:1.5px}
+ .game-core .action-panel{margin:8px 0 0;padding:6px 0 0;min-height:0;font-size:12px;line-height:1.35}
+ .game-core .action-panel p{margin:0 0 4px}
+ .game-core .action-panel button{min-height:44px;padding:8px 10px;margin:2px;font-size:12px}
+ .game-core .hand{grid-template-columns:repeat(2,clamp(82px,14svh,112px));gap:8px;padding:6px;max-height:calc(var(--hand-height)*2 + 20px);overflow-y:auto;overscroll-behavior:contain}
+ .game-core .hand .playing-card,.game-core .card-slot{height:var(--hand-height);padding:8px;border-radius:9px}
+ .game-core .hand .back{border-width:4px}
+ .game-core .hand .back strong{font-size:32px}
+ .game-core .hand .face strong{font-size:18px}
+ .game-core .card-help{font-size:8px;bottom:3px}
+ .game-core .position-label{top:3px;left:5px}
+ .game-core .hand-hint{font-size:11px;line-height:1.2}
+ .game-core .game-footer{gap:8px}
+ .game-core .cambio-button,.game-core #disconnectBtn{min-height:52px;padding:8px 10px;font-size:14px;border-radius:12px}
+ .game-core .cambio-button span{margin-left:6px}
+ .game .opponents{margin:10px 0 0;padding:5px 3px 8px;gap:8px}
+ .game .opponent{min-width:96px;padding:7px;flex:1}
+ .game .opponent h3{font-size:11px;margin-bottom:5px;max-width:110px}
+ .game .mini-cards{grid-template-columns:repeat(2,20px);gap:3px}
+ .game .mini-card{width:20px;min-height:23px;border-radius:3px}
+ .game .opponent small{font-size:8px;margin-top:5px}
+ .game .mini-cards:has(.target){grid-template-columns:repeat(2,44px)}
+ .game .mini-card.target{width:44px;min-height:44px}
+ .game .opponent:has(.target){min-width:112px}
+ body.game-screen .status{margin:6px 0;font-size:12px}
+}
+
+@media(max-width:700px){
+ .game-core .action-panel{display:flex;flex-wrap:wrap;justify-content:center;gap:4px}
+ .game-core .action-panel:empty{display:none}
+ .game-core .action-panel p{flex-basis:100%;margin:0}
+ .game-core .action-panel button{flex:1;min-width:0;margin:0;line-height:1.2}
+}
+@media(max-width:700px) and (max-height:600px){
+ .game-core{gap:5px}
+ .game-core .felt{padding:8px 10px}
+ .game-core .action-panel button{font-size:11px;padding:6px}
+ .game-core .hand{gap:6px;max-height:calc(var(--hand-height)*2 + 18px)}
+ .game-core .game-footer #disconnectBtn,.game-core .cambio-button{min-height:48px}
+}
