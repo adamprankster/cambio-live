@@ -175,3 +175,61 @@ body.game-screen .site-footer{display:none}
  .game-core .hand{gap:6px;max-height:calc(var(--hand-height)*2 + 18px)}
  .game-core .game-footer #disconnectBtn,.game-core .cambio-button{min-height:48px}
 }
+
+/* Room controls live in Settings, leaving space for full-height cards. */
+.game-core .game-footer{display:flex;justify-content:center}
+.game-core .cambio-button{width:100%;max-width:400px}
+.card-art{display:flex;position:relative;width:100%;height:100%;align-items:center;justify-content:center;color:#233f34}
+.card-art.red{color:#ae404a}.art-rank{position:absolute;top:0;left:0;font-size:clamp(12px,2.5vw,20px);font-weight:800;line-height:1}.art-rank.bottom{top:auto;left:auto;right:0;bottom:0;transform:rotate(180deg)}
+.card-art .art-suit{font-size:clamp(30px,6vw,55px);line-height:1}
+#drawnSlot[hidden]{display:none}#drawnCard{padding:8px;box-shadow:0 0 0 2px var(--accent),0 5px 12px #0003}
+#peekLabel{display:block;width:130px;height:190px;background:#fffdf5;border:1px solid #e6e4da;border-radius:12px;padding:12px;margin:18px auto}
+#peekLabel .art-suit{font-size:64px}
+.site-header nav{gap:4px}.site-header nav .quiet{padding:8px}
+/* Original rules artwork displayed as cropped sections, without the icon masthead. */
+.deal-sheet{width:min(100%,650px);min-height:calc(100svh - 66px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;justify-content:space-evenly;gap:4px;background:#faf9f2;border-radius:18px;padding:4px 0 12px}
+.sheet-slice{position:relative;overflow:hidden;flex-shrink:0;width:100%}
+.sheet-slice img{position:absolute;width:100%;height:auto;max-width:none;border-radius:0}
+.sheet-title{aspect-ratio:1024 / 125}.sheet-title img{top:-236%}
+.sheet-points{aspect-ratio:1024 / 385}.sheet-points img{top:-109.09091%}
+.sheet-powers{aspect-ratio:1024 / 590}.sheet-powers img{top:-136.44068%}
+.deal-sheet .deal-play{position:static;transform:none;flex-shrink:0;align-self:center;width:93%;height:auto;min-height:48px;font-size:clamp(11px,2.5vw,17px);margin:4px 0 0}
+.deal-sheet .deal-play:hover:not(:disabled){transform:none}
+body.deal-screen main{margin:0 4px;padding:0}
+#sheetDialog{padding:0;border:0;width:min(100%,660px);height:100svh;max-height:100svh;margin:auto;background:#faf9f2;border-radius:12px;overflow-y:auto}
+#sheetDialog .deal-sheet{min-height:calc(100svh - 12px);padding-top:40px}
+.sheet-close{position:absolute;right:8px;top:4px;z-index:2;background:#faf9f2}
+@media(max-width:700px){
+ .site-header .wordmark{font-size:21px;gap:5px}.site-header .brand-mark{font-size:27px}.site-header nav .quiet{font-size:11px;padding:6px}.site-header nav{gap:0}
+ body.game-screen{--hand-height:clamp(84px,calc((100svh - 460px)/2),180px)}
+ .game-core{min-height:calc(100svh - 65px - env(safe-area-inset-top) - env(safe-area-inset-bottom));justify-content:space-between;gap:8px}
+ .game-core .hand{grid-template-columns:repeat(2,calc(var(--hand-height)*.68));max-height:calc(var(--hand-height)*2 + 20px);width:100%;flex-shrink:0}
+ .game-core .hand .playing-card,.game-core .card-slot{height:var(--hand-height)}
+ .game-core .pile{height:clamp(90px,16svh,142px);width:clamp(61px,10.88svh,97px)}
+ .game-core .piles{gap:clamp(12px,4vw,30px)}
+ .game-core .hand .back strong{font-size:clamp(30px,6svh,48px)}
+ .game-core .game-footer{flex-shrink:0}.game-core .cambio-button{min-height:48px;font-size:16px}
+ .game .opponents{margin-top:12px}
+ body.lobby-screen .site-header{padding:4px 12px;min-height:50px}
+ body.lobby-screen main{min-height:0;margin:0 12px;padding:0 0 10px}
+ body.lobby-screen .site-footer{display:none}
+ #lobbyView{margin:0 auto;max-width:540px}
+ #lobbyView .panel{padding:10px 12px;margin-bottom:8px;border-radius:14px}
+ #lobbyView .invite .eyebrow{font-size:9px}#lobbyView .code-button{font-size:28px;line-height:1.2;min-height:36px;letter-spacing:5px}
+ #lobbyView .invite p{font-size:11px;margin:2px auto 0}
+ #lobbyView .section-title{margin:8px 0 6px}#lobbyView .section-title h2{font-size:18px}
+ #playerList{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px}
+ #lobbyView .player-row{position:relative;min-width:0;padding:7px 0;gap:6px;flex-wrap:wrap;font-size:11px;border:0}
+ #lobbyView .avatar{width:24px;height:24px;font-size:11px;flex-shrink:0}
+ #lobbyView .player-row>span:nth-child(2){flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ #lobbyView .player-row .badge{display:none}
+ #lobbyView .remove-bot{min-width:32px;min-height:36px;width:32px;padding:0;font-size:20px}
+ #lobbyView details summary{font-size:12px}
+ #lobbyView .bot-controls h3{font-size:12px;margin:0 0 6px}
+ #lobbyView .bot-controls select,#lobbyView #addBotBtn{min-height:42px;font-size:12px;padding:8px}
+ #lobbyView #startBtn{margin-top:8px;min-height:48px}
+ #lobbyHint{margin:4px 0;font-size:11px}
+}
+@media(max-width:360px){.site-header .wordmark{font-size:18px}.site-header .brand-mark{font-size:23px}.site-header nav .quiet{font-size:10px;padding:5px}.site-header .icon-button{width:38px}.game-core .pile{height:90px;width:61px}}
+
+#sheetDialog{max-width:100vw}
