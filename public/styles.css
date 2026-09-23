@@ -300,3 +300,16 @@ body.lobby-screen #lobbyView .invite .code-button{color:#fffef5}
  body.game-screen{--hand-height:clamp(74px,calc((100svh - 510px)/2),132px)}
 }
 @media(max-width:360px){.site-header nav{gap:3px}.site-header nav #rulesBtn,.site-header nav #sheetBtn{font-size:10px;padding:5px}}
+
+/* Penalty cards expand the hand instead of disappearing inside a two-row scroller. */
+.hand-summary{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:4px 6px 0}
+.hand-summary h2{font-size:13px;letter-spacing:0;margin:0}.hand-summary span{font-size:12px;font-weight:700;color:var(--muted)}
+.game-core .hand{max-height:none;overflow:visible}
+.game-core .hand.expanded-hand{grid-template-columns:repeat(var(--hand-columns),minmax(0,72px));gap:7px;width:100%;max-height:none;overflow:visible}
+.game-core .hand.expanded-hand .playing-card,.game-core .hand.expanded-hand .card-slot{height:auto;min-height:0;aspect-ratio:.68;padding:5px;border-radius:8px}
+.game-core .hand.expanded-hand .back{border-width:3px}
+.game-core .hand.expanded-hand .back strong{font-size:28px}
+.game-core .hand.expanded-hand .position-label{font-size:11px;top:3px;left:4px;opacity:1}
+.game-core .hand.expanded-hand .card-help{font-size:8px;bottom:3px}
+.new-penalty-card{animation:penalty-arrival 1.8s ease-out;box-shadow:0 0 0 3px #c99435}
+@keyframes penalty-arrival{from{transform:translateY(-10px);box-shadow:0 0 0 5px #c99435}to{transform:translateY(0);box-shadow:0 0 0 3px #c99435}}
