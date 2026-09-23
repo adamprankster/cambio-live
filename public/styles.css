@@ -233,3 +233,49 @@ body.deal-screen main{margin:0 4px;padding:0}
 @media(max-width:360px){.site-header .wordmark{font-size:18px}.site-header .brand-mark{font-size:23px}.site-header nav .quiet{font-size:10px;padding:5px}.site-header .icon-button{width:38px}.game-core .pile{height:90px;width:61px}}
 
 #sheetDialog{max-width:100vw}
+
+/* Keep rectangular cards while leaving room for the opponents below. */
+@media(max-width:700px){
+ body.game-screen{--hand-height:clamp(70px,calc((100svh - 530px)/2),122px)}
+ .game-core{min-height:0;justify-content:flex-start;gap:6px}
+ .game-core .pile{height:clamp(82px,13svh,112px);width:clamp(56px,8.84svh,76px)}
+ .game-core .hand{gap:6px;max-height:calc(var(--hand-height)*2 + 18px)}
+ .game-core .felt{padding:8px 10px}
+ .game-core .game-footer .cambio-button{min-height:44px}
+ .game .opponents{margin-top:8px}
+}
+
+/* Seamless rules title, with no hard image crop above the lettering. */
+.sheet-title-native{aspect-ratio:auto;overflow:visible;padding:18px 16px 14px;flex-shrink:0;background:transparent}
+.sheet-word{display:flex;align-items:center;justify-content:space-between;gap:16px;color:#365d4e}
+.sheet-word:before,.sheet-word:after{content:none}
+.sheet-word h2{color:#af3035;font-size:clamp(32px,8vw,60px);line-height:1.2;letter-spacing:.22em;font-weight:500;margin:0;padding-left:.22em}
+.sheet-word>span{font-size:24px;font-weight:400}
+.sheet-title-native p{color:#4c7063;text-align:center;letter-spacing:.35em;font-size:clamp(12px,3vw,20px);margin:6px 0 0;line-height:1.3}
+.deal-sheet{background:#faf9f2;overflow:hidden;border-radius:22px}
+#sheetDialog .deal-sheet{padding-top:44px}
+.open-seat{opacity:.65}.open-seat .avatar{background:transparent;color:var(--muted);border:1px dashed var(--border)}
+@media(max-width:700px){
+ #lobbyView .open-seat{border:1px dashed var(--border);border-radius:10px;padding:7px;min-height:44px}
+ body.lobby-screen #lobbyView .invite{background:var(--table);color:#fffef5;border-color:transparent}
+ #lobbyView .invite p{color:#fffef5bb}
+}
+@media(max-width:700px) and (min-height:701px){
+ body.home-screen .home.active{gap:18px;padding-bottom:12px}
+ body.home-screen .hero-cards{height:clamp(190px,29svh,290px);margin-bottom:14px}
+ body.home-screen .decor-card{height:clamp(150px,24svh,210px);width:clamp(104px,16.6svh,146px)}
+ body.home-screen .decor-card.back{transform:translateX(-82px) rotate(-17deg)}
+ body.home-screen .decor-card.last{transform:translateX(82px) rotate(18deg)}
+ body.home-screen .join-panel{padding:clamp(22px,3svh,30px)}
+ body.home-screen .join-panel input,body.home-screen .join-panel button{min-height:54px}
+ body.lobby-screen #lobbyView{min-height:calc(100svh - 72px - env(safe-area-inset-top) - env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:4px}
+ #lobbyView .invite{min-height:clamp(112px,16svh,152px);display:flex;flex-direction:column;justify-content:center}
+ #lobbyView .code-button{font-size:36px;min-height:46px}
+ #lobbyView #playerList{flex:1;align-content:stretch;grid-auto-rows:1fr;gap:8px}
+ #lobbyView .player-row{padding:10px 0;font-size:13px;align-content:center}
+ #lobbyView .open-seat{padding:10px;align-content:center}
+ #lobbyView .avatar{width:28px;height:28px}
+ #lobbyView #startBtn{min-height:54px}
+}
+
+body.lobby-screen #lobbyView .invite .code-button{color:#fffef5}
