@@ -1,10 +1,10 @@
+import {setupLegalUI} from './legal-ui.js';
 import {newSwaps,showSwapEffects,clearSwapEffects} from './swap-effects.js';
 import {dealIntroKey,needsDealIntro} from './deal-intro.js';
 import {showRoomCreatedAd} from './ads.js';
 import { createClient } from './vendor/supabase.js';
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 import {copyText,watchAppState} from './vendor/native.js';
-import {supportEmail,developerName} from './store-config.js';
 const db=createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const $=id=>document.getElementById(id);
 const storage={get(k){try{return localStorage.getItem('cambio.'+k)}catch{return null}},set(k,v){try{v===null?localStorage.removeItem('cambio.'+k):localStorage.setItem('cambio.'+k,v)}catch{}}};
@@ -63,12 +63,8 @@ document.addEventListener('visibilitychange',()=>{if(document.hidden){hideInitia
 (async()=>{const code=storage.get('room');if(code){try{await auth();await enter(code);}catch(e){status(errorMessage(e));}}})();
 
 watchAppState(active=>{if(active){db.auth.startAutoRefresh();refresh();}else{db.auth.stopAutoRefresh();hideInitial();closePeek();if(state.view?.room.status==='playing')renderHand();}});
-$('privacyBtn').onclick=()=>$('privacyDialog').showModal();
-$('supportBtn').onclick=()=>{if(supportEmail)location.href='mailto:'+supportEmail;else{$('supportDialog').showModal();}};
-$('privacyContact').textContent=supportEmail?'Privacy contact: '+supportEmail:'Support contact will be provided before the App Store release.';
-$('privacyOperator').textContent=developerName?'Operated by '+developerName+'.':'';
 $('deleteDataBtn').onclick=()=>$('deleteDataDialog').showModal();
-bind('confirmDeleteDataBtn',async()=>{const {data,error}=await db.auth.getSession();if(error)throw error;if(data.session)await rpc('delete_guest_account');await db.auth.signOut({scope:'local'});await disconnect();for(const key of ['name','room','theme'])storage.set(key,null);$('playerName').value='';setTheme('forest');$('deleteDataDialog').close();$('settingsDialog').close();status('Your guest account and saved personal data have been deleted. Joining a table creates a new guest account.');});
+bind('confirmDeleteDataBtn',async()=>{const {data,error}=await db.auth.getSession();if(error)throw error;if(data.session)await rpc('delete_guest_account');await db.auth.signOut({scope:'local'});await disconnect();try{for(const key of Object.keys(localStorage))if(key.startsWith('cambio.'))localStorage.removeItem(key);}catch{}$('reduceMotion').checked=false;document.documentElement.dataset.reduceMotion='false';state.dealIntro=null;$('playerName').value='';setTheme('forest');$('deleteDataDialog').close();$('settingsDialog').close();status('Your guest account and saved personal data have been deleted. Joining a table creates a new guest account.');});
 
 bind('enterGameBtn',()=>{state.dealIntro=dealIntroKey(state.view);storage.set('dealIntro',state.dealIntro);render(state.view);});
 
@@ -79,3 +75,5 @@ function cardFace(label){
  card.classList.toggle('red',/♥|♦|Red/.test(label));card.append(text('span',rank,'art-rank'),text('strong',suit||rank,'art-suit'),text('span',rank,'art-rank bottom'));return card;
 }
 const sheetCopy=document.querySelector('.deal-sheet').cloneNode(true);sheetCopy.querySelector('button').removeAttribute('id');sheetCopy.querySelector('button').setAttribute('aria-label','Back to game');sheetCopy.querySelector('button').textContent='Back to game';sheetCopy.querySelector('button').onclick=()=>$('sheetDialog').close();$('sheetDialogContent').append(sheetCopy);
+
+setupLegalUI();

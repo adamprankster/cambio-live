@@ -104,3 +104,7 @@ You can set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to an installed Chromium/Chrome exe
 ## Rules screen and jokers
 
 After the host deals, each player sees the supplied rules sheet. Tap “Play smart. Play Cambio.” to enter the table, peek, and get ready. Every new round uses 54 cards, including two jokers worth zero with no special power; jokers match one another for slamming. The additive jokers migration preserves cards in existing rounds.
+
+## App Store readiness
+
+See [app-store/REMAINING-STEPS.md](app-store/REMAINING-STEPS.md) for unresolved upload steps, owner decisions and legal/privacy review items. Settings and public information pages are implemented; this does not mean the app has been approved or is ready to submit.

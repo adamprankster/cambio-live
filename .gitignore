@@ -20,3 +20,9 @@ supabase/.temp/
 .cache/
 public/privacy.html
 public/support.html
+
+public/data.html
+public/accessibility.html
+public/terms.html
+public/licenses.html
+public/third-party-notices.txt

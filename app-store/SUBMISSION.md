@@ -2,6 +2,8 @@
 
 ## Current status
 
+**Read [REMAINING-STEPS.md](REMAINING-STEPS.md) first for the current release blockers and the owner’s request to revisit them when they next ask about upload.**
+
 The iOS source project is prepared. It bundles the same HTML, CSS, JavaScript, fonts, game rules and Supabase connection as the website. Native and web players share rooms. Bots still require internet and a foreground human client. No remote website is loaded as the app's main screen.
 
 **This is not a signed .ipa or a validated App Store archive.** Xcode is not installed on the preparation Mac, so no iOS simulator, device, compiler, signing or archive validation has been run. An Apple Developer team and a support email have not been selected. Apple decides approval; packaging a working game does not guarantee review acceptance.
@@ -80,4 +82,4 @@ Marketing URL: https://cambio-live.netlify.app/
 - The deletion migration was applied to production; the nine existing rooms and all 468 card records had identical before/after fingerprints.
 - Production runtime npm dependencies have no reported vulnerabilities. Three moderate advisories remain in the Capacitor CLI's development-only xcode/uuid dependency chain; npm reports no available fix. These packages are build tools, not bundled game JavaScript or native runtime plugins. Recheck tooling before release.
 - A native device build, TestFlight install, app-switcher privacy behavior, native clipboard and visual comparison on iPhone/iPad remain unverified until Xcode is available.
-- The web deployment was not replaced with this unconfigured App Store candidate. Public privacy/support pages must be published after owner details are filled in.
+- September 23 update: privacy, data, support, accessibility, fair-play and credits pages are now published and linked from Settings. They explicitly state that publisher/contact details have not been decided; complete these before submission.

@@ -17,7 +17,7 @@ export function showSwapEffects(events,view){
  clearSwapEffects();
  const notice=document.createElement('div');notice.className='swap-notice';notice.setAttribute('role','status');notice.setAttribute('aria-live','polite');
  notice.textContent=events.slice(-3).map(e=>swapMessage(e,view)).join(' ');document.body.append(notice);effects.add(notice);
- const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const reduced=document.documentElement.dataset.reduceMotion==='true'||matchMedia('(prefers-reduced-motion: reduce)').matches;
  for(const event of events){
   const find=(seat,pos)=>[...document.querySelectorAll('[data-card-seat][data-card-position]')].find(el=>Number(el.dataset.cardSeat)===seat&&Number(el.dataset.cardPosition)===pos);
   const a=find(event.actor_seat,event.own_position),b=find(event.target_seat,event.target_position);
