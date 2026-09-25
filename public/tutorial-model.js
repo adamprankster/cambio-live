@@ -62,3 +62,11 @@ export function perform(s,target){
  return n;
 }
 export function advance(s){if(!s.review)return s;if(s.step+1<lessons[s.lesson].steps.length)return {...s,step:s.step+1,review:false,notice:''};return beginLesson((s.lesson+1)%lessons.length);}
+
+// Keep linked game actions flowing; pause only at a lesson boundary.
+export function playStep(s,target){
+ const result=perform(s,target);
+ if(result===s)return s;
+ if(result.step===lessons[result.lesson].steps.length-1)return result;
+ return {...advance(result),notice:result.notice};
+}

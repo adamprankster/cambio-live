@@ -1,4 +1,4 @@
-import {lessons,beginLesson,currentStep,perform,advance} from './tutorial-model.js';
+import {lessons,beginLesson,currentStep,playStep,advance} from './tutorial-model.js';
 export function setupTutorial({isInGame=()=>false}={}){
  let state=beginLesson();
  const dialog=document.createElement('dialog');dialog.id='tutorialDialog';dialog.setAttribute('aria-labelledby','tutorialTitle');
@@ -9,7 +9,7 @@ export function setupTutorial({isInGame=()=>false}={}){
  function face(label){const el=node('span','','card-art');const king=label.includes('K'),joker=label==='Joker';const rank=king?'K':joker?'★':label.replace(/[♠♥♦♣]/g,'');const suit=(label.match(/[♠♥♦♣]/)||[])[0]||(king?'♚':'★');el.classList.toggle('red',/Red|♥|♦/.test(label));el.append(node('span',rank,'art-rank'),node('strong',suit,'art-suit'),node('span',rank,'art-rank bottom'));return el;}
  function control(key,label,cls=''){
  const b=node('button',label,cls),active=!state.review&&currentStep(state).target===key;b.type='button';b.disabled=!active;b.classList.toggle('tutorial-target',active);b.setAttribute('aria-describedby','tutorialCoach');
- b.onclick=()=>{state=perform(state,key);render();$('tutorialNext').focus();};return b;
+ b.onclick=()=>{state=playStep(state,key);render();const next=state.review?$('tutorialNext'):dialog.querySelector('.tutorial-target');next?.focus({preventScroll:true});};return b;
  }
  function card(key,label,caption,up=false){
  const b=control(key,'','tutorial-card '+(up?'face':'back')+(key==='own'+state.selected?' selected':''));b.setAttribute('aria-label',caption+(up?': '+label:''));
@@ -26,7 +26,7 @@ export function setupTutorial({isInGame=()=>false}={}){
  const labels={ready:'I’m ready',replace:'Replace selected card',burn:'Discard this card',skip:'Skip power',peek:'Peek selected card',hide:'Hide card',swap:'Swap selected card',cambio:'Call Cambio',final:'Play opponent’s final turn',score:'Score round',done:'Finish practice'};
  if(labels[step.target])table.append(control(step.target,labels[step.target],'primary tutorial-action'));
  if(state.totals)table.append(node('p',`Running totals: You ${state.totals.you} · Opponent ${state.totals.opponent}`,'tutorial-totals'));
- $('tutorialFeedback').textContent=state.notice;$('tutorialFeedback').hidden=!state.review;$('tutorialNext').hidden=!state.review;
+ $('tutorialFeedback').textContent=state.notice;$('tutorialFeedback').hidden=!state.notice;$('tutorialNext').hidden=!state.review;
  const last=state.step===lessons[state.lesson].steps.length-1;const finished=last&&state.lesson===lessons.length-1;
  $('tutorialNext').textContent=finished?'Back to How to play':last?'Next lesson →':'Continue →';
  }
