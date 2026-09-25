@@ -1,3 +1,4 @@
+import {setupTutorial} from './tutorial.js';
 import {setupLegalUI} from './legal-ui.js';
 import {newSwaps,showSwapEffects,clearSwapEffects} from './swap-effects.js';
 import {dealIntroKey,needsDealIntro} from './deal-intro.js';
@@ -88,3 +89,5 @@ const sheetCopy=document.querySelector('.deal-sheet').cloneNode(true);sheetCopy.
 $('openingPeek').value=openingMode();
 $('openingPeek').addEventListener('change',()=>{storage.set('openingPeek',$('openingPeek').value);hideInitial();state.autoPeekKey=null;if(state.view?.room.status==='playing')renderHand();refresh();});
 setupLegalUI();
+
+setupTutorial({isInGame:()=>state.view?.room.status==='playing'});
