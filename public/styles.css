@@ -402,3 +402,8 @@ body.lobby-screen #lobbyView .invite .code-button{color:#fffef5}
 #tutorialDialog.tutorial-complete #tutorialNext{min-height:42px;box-shadow:0 0 0 3px var(--accent);animation:tutorial-next-pulse 1s ease-in-out 3}
 @keyframes tutorial-next-pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 3px var(--accent)}50%{transform:scale(1.035);box-shadow:0 0 0 6px var(--accent)}}
 @media(prefers-reduced-motion:reduce){#tutorialDialog.tutorial-complete #tutorialNext{animation:none}}
+/* Revealed opponent cards use artwork sized for their smaller card frames. */
+#tutorialDialog .opponent-practice .tutorial-card .art-suit{font-size:17px;line-height:1}
+#tutorialDialog .opponent-practice .tutorial-card .art-rank{font-size:8px;line-height:1}
+#tutorialDialog .opponent-practice .tutorial-card .joker-art .art-rank{font-size:4px}
+#tutorialDialog .opponent-practice .tutorial-card .joker-portrait{width:65%;height:65%}
