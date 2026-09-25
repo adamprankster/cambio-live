@@ -38,13 +38,13 @@ export function setupTutorial({isInGame=()=>false}={}){
  const labels={ready:'I’m ready',replace:'Replace selected card',burn:'Discard this card',skip:'Skip power',peek:'Peek selected card',hide:'Hide card',swap:'Swap selected card',cambio:'Call Cambio',final:'Play opponent’s final turn',score:'Score round',done:'Finish practice'};
  if(labels[step.target])table.append(control(step.target,labels[step.target],'primary tutorial-action'));
  if(state.totals)table.append(node('p',`Running totals: You ${state.totals.you} · Opponent ${state.totals.opponent}`,'tutorial-totals'));
- $('tutorialFeedback').textContent=state.notice;$('tutorialFeedback').hidden=!state.review;$('tutorialNext').hidden=!state.review;
+ $('tutorialFeedback').textContent=state.notice;$('tutorialFeedback').hidden=!state.review;$('tutorialNext').hidden=!state.review;dialog.classList.toggle('tutorial-complete',state.review);if(state.review){const complete=node('p','✓ Lesson complete','tutorial-complete-label');$('tutorialCoach').prepend(complete);}
  const last=state.step===lessons[state.lesson].steps.length-1;const finished=last&&state.lesson===lessons.length-1;
- $('tutorialNext').textContent=finished?'Back to How to play':last?'Next lesson →':'Continue →';
+ $('tutorialNext').textContent=finished?'Practice complete · Back to How to play':last?'Next lesson →':'Continue →';
  }
  $('tutorialLesson').onchange=()=>{if(swapping)return;state=beginLesson(Number($('tutorialLesson').value));render();};
  $('tutorialRestart').onclick=()=>{if(swapping)return;state=beginLesson(state.lesson);render();};
  $('tutorialNext').onclick=()=>{if(state.lesson===lessons.length-1&&state.step===lessons[state.lesson].steps.length-1){dialog.close();return;}state=advance(state);render();const target=dialog.querySelector('.tutorial-target');target?.focus({preventScroll:true});};
  $('tutorialClose').onclick=()=>dialog.close();
- document.getElementById('tutorialBtn').onclick=()=>{$('tutorialLive').hidden=!isInGame();render();dialog.showModal();};
+ document.getElementById('tutorialBtn').onclick=()=>{state=beginLesson(0);$('tutorialLive').hidden=!isInGame();render();dialog.showModal();};
 }

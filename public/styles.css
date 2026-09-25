@@ -391,3 +391,14 @@ body.lobby-screen #lobbyView .invite .code-button{color:#fffef5}
  .tutorial-piles{gap:20px;margin-bottom:4px}.tutorial-action{min-height:32px;margin-top:3px;padding:5px 10px}
  #tutorialFeedback{font-size:11px;line-height:1.3;padding:6px;margin:4px 0}.tutorial-controls{margin-top:4px}.tutorial-controls button{min-height:32px;padding:5px 9px}
 }
+
+/* Separate lesson completion from the active card task. */
+#tutorialDialog .opponent-practice .tutorial-card.back strong{font-size:17px;line-height:1;transform:translateY(4px)}
+#tutorialDialog .opponent-practice .tutorial-position{font-size:9px;top:0;left:2px;line-height:1}
+#tutorialDialog .tutorial-complete-label{color:var(--ink);font-size:13px;font-weight:800;margin:0 0 4px}
+#tutorialDialog.tutorial-complete .tutorial-coach>small,#tutorialDialog.tutorial-complete .tutorial-coach>h3,#tutorialDialog.tutorial-complete .tutorial-coach>p:not(.tutorial-complete-label){display:none}
+#tutorialDialog.tutorial-complete .tutorial-coach{background:var(--accent);text-align:center}
+#tutorialDialog.tutorial-complete .tutorial-controls{position:sticky;bottom:0;background:var(--bg);padding:6px 0 0;z-index:3}
+#tutorialDialog.tutorial-complete #tutorialNext{min-height:42px;box-shadow:0 0 0 3px var(--accent);animation:tutorial-next-pulse 1s ease-in-out 3}
+@keyframes tutorial-next-pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 3px var(--accent)}50%{transform:scale(1.035);box-shadow:0 0 0 6px var(--accent)}}
+@media(prefers-reduced-motion:reduce){#tutorialDialog.tutorial-complete #tutorialNext{animation:none}}
