@@ -368,3 +368,26 @@ body.lobby-screen #lobbyView .invite .code-button{color:#fffef5}
 #sheetDialog .deal-sheet{min-height:100dvh;padding-bottom:0;gap:2px}
 #sheetDialog .deal-play{margin-bottom:4px}
 @media(max-height:740px){.rule-example{width:34px;height:48px}.rule-card-section{gap:5px;margin-bottom:5px}.deal-sheet .sheet-title-native{padding-top:6px;padding-bottom:6px}.rule-powers .rule-card-tile{padding:4px}.deal-sheet .deal-play{min-height:42px;margin-bottom:3px}.tutorial-controls{margin-top:4px}#tutorialFeedback{margin:4px 0;padding:7px}}
+/* Practice follows the real table: opponents, piles, then your hand. */
+.tutorial-table{display:flex;flex-direction:column;gap:7px;padding:10px}
+.tutorial-opponent-group,.tutorial-own-group{width:100%}
+.tutorial-piles{flex-wrap:nowrap;gap:18px;margin:0 0 5px}
+.tutorial-hand{grid-template-columns:repeat(2,42px);gap:11px 9px}
+.tutorial-card{width:42px;height:59px;padding:5px}
+.tutorial-empty{height:59px}
+.opponent-practice{grid-template-columns:repeat(4,32px);gap:7px}
+.opponent-practice .tutorial-card{width:32px;height:44px;padding:4px}
+.tutorial-table h3{font-size:10px;margin-bottom:4px}
+.tutorial-action{margin:4px auto 0;min-height:34px;padding:6px 12px}
+.tutorial-totals{font-size:11px}
+@media(max-height:740px){
+ #tutorialDialog{padding:9px}.tutorial-table{gap:5px;padding:8px}
+ .tutorial-top h2{font-size:17px}.tutorial-top .eyebrow{display:none}
+ #tutorialDialog label{margin-top:2px}#tutorialLesson{min-height:32px;padding:4px 6px}
+ .tutorial-coach{padding:6px;margin:5px 0}.tutorial-coach h3{font-size:14px}.tutorial-coach p{font-size:11px;line-height:1.3}
+ .tutorial-card{width:36px;height:50px;padding:4px}.tutorial-card.back strong{font-size:24px}.tutorial-card .art-suit{font-size:24px}
+ .tutorial-hand{grid-template-columns:repeat(2,36px);gap:10px 9px}.tutorial-empty{height:50px}
+ .opponent-practice{grid-template-columns:repeat(4,30px);gap:7px}.opponent-practice .tutorial-card{width:30px;height:41px}
+ .tutorial-piles{gap:20px;margin-bottom:4px}.tutorial-action{min-height:32px;margin-top:3px;padding:5px 10px}
+ #tutorialFeedback{font-size:11px;line-height:1.3;padding:6px;margin:4px 0}.tutorial-controls{margin-top:4px}.tutorial-controls button{min-height:32px;padding:5px 9px}
+}
