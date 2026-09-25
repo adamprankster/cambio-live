@@ -407,3 +407,5 @@ body.lobby-screen #lobbyView .invite .code-button{color:#fffef5}
 #tutorialDialog .opponent-practice .tutorial-card .art-rank{font-size:8px;line-height:1}
 #tutorialDialog .opponent-practice .tutorial-card .joker-art .art-rank{font-size:4px}
 #tutorialDialog .opponent-practice .tutorial-card .joker-portrait{width:65%;height:65%}
+
+#tutorialDialog .tutorial-optional{display:block;margin-top:3px;font-size:10px;line-height:1.25}#tutorialDialog.tutorial-complete .tutorial-optional{display:none}

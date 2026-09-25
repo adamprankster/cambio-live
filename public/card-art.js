@@ -22,5 +22,6 @@ export function setupRuleCards(){
  const numbers=document.createElement('p');numbers.className='rule-number-note';numbers.textContent='Number cards 2–10 score their face value.';points.append(numbers);
  const powers=section('SPECIAL CARD POWERS','rule-powers');
  for(const entry of [[['7♥','8♣'],'7 or 8','Look at one of your own cards.'],[['9♦','10♠'],'9 or 10','Look at an opponent’s card.'],[['J♣','Q♥'],'Jack or queen','Blind swap one of yours with an opponent’s.'],[['Black K'],'Black king','Look at an opponent’s card, then optionally swap it with one of yours.']])powers.append(tile(...entry));
+ const optional=document.createElement('p');optional.className='rule-number-note';optional.textContent='(Powers are optional — you can skip them.)';powers.append(optional);
  sheet.querySelector('.sheet-points').replaceWith(points);sheet.querySelector('.sheet-powers').replaceWith(powers);
 }

@@ -29,7 +29,7 @@ export function setupTutorial({isInGame=()=>false}={}){
  }
  function render(){
  const step=currentStep(state);$('tutorialLesson').value=state.lesson;
- $('tutorialCoach').replaceChildren(node('small',`Lesson ${state.lesson+1} of ${lessons.length} · Step ${state.step+1} of ${lessons[state.lesson].steps.length}`),node('h3',step.title),node('p',step.instruction));
+ $('tutorialCoach').replaceChildren(node('small',`Lesson ${state.lesson+1} of ${lessons.length} · Step ${state.step+1} of ${lessons[state.lesson].steps.length}`),node('h3',step.title),node('p',step.instruction));if([3,4,5,6].includes(state.lesson))$('tutorialCoach').append(node('small','(In a real game, this power is optional — you can skip it.)','tutorial-optional'));
  const table=$('tutorialTable');table.replaceChildren();
  const opponent=node('div','','tutorial-hand opponent-practice');state.other.forEach((c,i)=>opponent.append(card('other'+i,c,'Opponent card '+(i+1),state.shown.includes('other'+i))));const opponentGroup=node('section','','tutorial-opponent-group');opponentGroup.append(node('h3','Practice opponent'),opponent);opponentGroup.hidden=state.lesson<4||(state.review&&step.action==='done');table.append(opponentGroup);
  const piles=node('div','','tutorial-piles');const deck=node('div');deck.append(card('deck','','Draw pile'),node('small','DRAW'));const discard=node('div');discard.append(card('discard',state.discard,'Discard pile',true),node('small','DISCARD'));piles.append(deck,discard);
