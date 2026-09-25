@@ -1,3 +1,4 @@
+import {cardFace,setupRuleCards} from './card-art.js';
 import {setupTutorial} from './tutorial.js';
 import {setupLegalUI} from './legal-ui.js';
 import {newSwaps,showSwapEffects,clearSwapEffects} from './swap-effects.js';
@@ -78,12 +79,7 @@ bind('confirmDeleteDataBtn',async()=>{const {data,error}=await db.auth.getSessio
 
 bind('enterGameBtn',()=>{state.dealIntro=dealIntroKey(state.view);storage.set('dealIntro',state.dealIntro);render(state.view);});
 
-function cardFace(label){
- const card=text('span','','card-art');card.setAttribute('role','img');card.setAttribute('aria-label',label);
- const suit=(label.match(/[♠♥♦♣]/)||[])[0]||(label==='Joker'?'★':label.includes('K')?'♚':'');
- const rank=label==='Joker'?'JOKER':label.includes('K')?'K':label.replace(/[♠♥♦♣]/g,'');
- card.classList.toggle('red',/♥|♦|Red/.test(label));card.append(text('span',rank,'art-rank'),text('strong',suit||rank,'art-suit'),text('span',rank,'art-rank bottom'));return card;
-}
+setupRuleCards();
 const sheetCopy=document.querySelector('.deal-sheet').cloneNode(true);sheetCopy.querySelector('button').removeAttribute('id');sheetCopy.querySelector('button').setAttribute('aria-label','Back to game');sheetCopy.querySelector('button').textContent='Back to game';sheetCopy.querySelector('button').onclick=()=>$('sheetDialog').close();$('sheetDialogContent').append(sheetCopy);
 
 $('openingPeek').value=openingMode();

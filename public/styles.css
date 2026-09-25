@@ -338,3 +338,33 @@ body.lobby-screen #lobbyView .invite .code-button{color:#fffef5}
 .tutorial-tap-marker{background:#d9f1ff;color:#123b51;border:1px solid #8bbdd7}
 .tutorial-selected-marker{background:#efbf55;color:#352507}
 .tutorial-hand{row-gap:18px}.tutorial-piles{margin-bottom:23px}.tutorial-action{margin-top:20px}
+/* Shared illustrated joker and matching, accessible rule-sheet cards. */
+.joker-portrait{width:76%;height:76%;max-height:110px}.joker-art .art-rank{font-size:clamp(6px,1.7vw,10px);letter-spacing:.02em}
+.deal-sheet,#sheetDialog{background:var(--bg);color:var(--ink)}.sheet-close{background:var(--bg)}
+.rule-card-section{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:12px;display:grid;gap:10px;margin:0 12px 10px}
+.rule-card-section>h3{grid-column:1/-1;font-size:13px;letter-spacing:2px;margin:0}.rule-points{grid-template-columns:repeat(4,minmax(0,1fr))}.rule-powers{grid-template-columns:repeat(2,minmax(0,1fr));flex:1}
+.rule-card-tile{text-align:center;min-width:0}.rule-card-tile h4{font-size:13px;margin:6px 0 2px}.rule-card-tile p{font-size:12px;line-height:1.35;margin:0}.rule-card-examples{display:flex;justify-content:center;gap:6px}.rule-example{width:48px;height:67px;border-radius:7px;padding:6px;flex-shrink:0}.rule-example .art-suit{font-size:27px}.rule-example .art-rank{font-size:11px}.rule-example .joker-art .art-rank{font-size:6px}.rule-number-note{grid-column:1/-1;margin:0;font-size:11px;text-align:center;color:var(--muted)}
+.deal-sheet .sheet-title-native{padding:12px 16px}.deal-sheet .deal-play{margin:0 auto 10px}.rule-powers .rule-card-tile{padding:6px;border:1px solid var(--border);border-radius:12px}
+@media(max-height:740px){.rule-card-section{padding:9px;gap:7px;margin-bottom:7px}.rule-example{width:38px;height:53px;padding:5px}.rule-example .art-suit{font-size:23px}.rule-card-tile h4{font-size:11px}.rule-card-tile p{font-size:11px}.deal-sheet .sheet-title-native{padding:8px 14px}.sheet-word h2{font-size:32px}.sheet-title-native p{font-size:11px;margin-top:2px}.rule-card-section>h3{font-size:11px;letter-spacing:1px}}
+/* Compact practice: table and hand share a row, leaving instructions visible. */
+#tutorialDialog{padding:12px;max-height:calc(100dvh - 12px);width:min(560px,calc(100% - 12px))}
+.tutorial-top h2{font-size:20px}.tutorial-top .eyebrow{font-size:8px}.tutorial-top .icon-button{min-height:36px;height:36px;width:36px}
+#tutorialDialog label{margin:4px 0 2px;font-size:11px}#tutorialLesson{min-height:36px;padding:6px;font-size:12px}
+.tutorial-coach{padding:9px;margin:7px 0}.tutorial-coach h3{font-size:15px;margin:2px 0}.tutorial-coach p{font-size:12px;line-height:1.4}.tutorial-coach small{font-size:10px}
+.tutorial-table{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:10px;padding:12px}
+.tutorial-opponent-group{grid-column:1/-1}.tutorial-own-group{grid-column:2;grid-row:2}
+.tutorial-table:not(:has(.tutorial-opponent-group:not([hidden]))) .tutorial-own-group{grid-row:1}
+.tutorial-piles{grid-column:1;gap:9px;margin:0;flex-wrap:wrap}.tutorial-piles>div{gap:5px}.tutorial-piles small{font-size:7px;letter-spacing:.5px}
+.tutorial-hand{grid-template-columns:repeat(2,48px);gap:14px 8px}.tutorial-hand:has(> :nth-child(5)){grid-template-columns:repeat(3,40px)}
+.tutorial-card{width:48px;height:67px;padding:6px}.tutorial-hand:has(> :nth-child(5)) .tutorial-card{width:40px;height:56px}
+.tutorial-empty{height:67px}.tutorial-card .art-suit{font-size:28px}.tutorial-card .joker-art .art-rank{font-size:6px}
+.opponent-practice{grid-template-columns:repeat(4,40px);margin:0;gap:8px}.opponent-practice .tutorial-card{width:40px;height:56px}
+.tutorial-action{grid-column:1/-1;min-height:36px;padding:8px;margin:3px auto 0;font-size:12px}
+.tutorial-totals{grid-column:1/-1;font-size:12px;margin:0}
+#tutorialFeedback{padding:9px;margin:7px 0;font-size:12px;line-height:1.4}.tutorial-controls{margin-top:7px}.tutorial-controls button{min-height:36px;padding:7px 10px;font-size:11px}
+.tutorial-table h3{font-size:11px;margin-bottom:6px}.tutorial-tap-marker,.tutorial-selected-marker{font-size:9px;padding:2px 4px;bottom:-8px}
+.tutorial-swap-ghost{position:absolute;z-index:20;display:grid;place-items:center;background:var(--table);color:var(--accent);border:3px solid #fffdf5;border-radius:7px;font-size:26px;box-shadow:0 4px 18px #0006;pointer-events:none}
+@media(max-height:700px){#tutorialDialog{padding:9px}.tutorial-top h2{font-size:17px}.tutorial-top .eyebrow{display:none}.tutorial-coach{padding:7px;margin:5px 0}.tutorial-coach p,#tutorialFeedback{font-size:11px;line-height:1.35}.tutorial-card{width:42px;height:59px}.tutorial-hand{grid-template-columns:repeat(2,42px);gap:12px 7px}.tutorial-empty{height:59px}.opponent-practice{grid-template-columns:repeat(4,34px)}.opponent-practice .tutorial-card{width:34px;height:48px}.tutorial-table{padding:9px;gap:8px}.tutorial-hand:has(> :nth-child(5)){grid-template-columns:repeat(3,36px)}.tutorial-hand:has(> :nth-child(5)) .tutorial-card{width:36px;height:51px}}
+#sheetDialog .deal-sheet{min-height:100dvh;padding-bottom:0;gap:2px}
+#sheetDialog .deal-play{margin-bottom:4px}
+@media(max-height:740px){.rule-example{width:34px;height:48px}.rule-card-section{gap:5px;margin-bottom:5px}.deal-sheet .sheet-title-native{padding-top:6px;padding-bottom:6px}.rule-powers .rule-card-tile{padding:4px}.deal-sheet .deal-play{min-height:42px;margin-bottom:3px}.tutorial-controls{margin-top:4px}#tutorialFeedback{margin:4px 0;padding:7px}}
