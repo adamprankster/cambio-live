@@ -8,12 +8,12 @@ export function setupTutorial({isInGame=()=>false}={}){
  function node(tag,value,cls=''){const el=document.createElement(tag);el.textContent=value;el.className=cls;return el;}
  function face(label){const el=node('span','','card-art');const king=label.includes('K'),joker=label==='Joker';const rank=king?'K':joker?'★':label.replace(/[♠♥♦♣]/g,'');const suit=(label.match(/[♠♥♦♣]/)||[])[0]||(king?'♚':'★');el.classList.toggle('red',/Red|♥|♦/.test(label));el.append(node('span',rank,'art-rank'),node('strong',suit,'art-suit'),node('span',rank,'art-rank bottom'));return el;}
  function control(key,label,cls=''){
- const b=node('button',label,cls),active=!state.review&&currentStep(state).target===key;b.type='button';b.disabled=!active;b.classList.toggle('tutorial-target',active);b.setAttribute('aria-describedby','tutorialCoach');
- b.onclick=()=>{state=playStep(state,key);render();const next=state.review?$('tutorialNext'):dialog.querySelector('.tutorial-target');next?.focus({preventScroll:true});};return b;
+ const b=node('button',label,cls),active=!state.review&&currentStep(state).target===key;b.type='button';b.disabled=!active&&!(key==='own'+state.selected&&!state.review);b.classList.toggle('tutorial-target',active);b.setAttribute('aria-describedby','tutorialCoach');
+ b.onclick=()=>{if(key==='own'+state.selected&&currentStep(state).target!==key){state={...state,notice:'Card '+(state.selected+1)+' is selected. '+currentStep(state).instruction};}else state=playStep(state,key);render();const next=state.review?$('tutorialNext'):dialog.querySelector('.tutorial-target');next?.focus({preventScroll:true});};return b;
  }
  function card(key,label,caption,up=false){
- const b=control(key,'','tutorial-card '+(up?'face':'back')+(key==='own'+state.selected?' selected':''));b.setAttribute('aria-label',caption+(up?': '+label:''));
- b.append(up?face(label):node('strong','♧'));if(/^(own|other)/.test(key))b.append(node('small',caption.replace('Your card ','').replace('Opponent card ',''),'tutorial-position'));return b;
+ const b=control(key,'','tutorial-card '+(up?'face':'back')+(key==='own'+state.selected?' selected':''));b.setAttribute('aria-label',caption+(up?': '+label:''));if(key.startsWith('own'))b.setAttribute('aria-pressed',String(key==='own'+state.selected));
+ b.append(up?face(label):node('strong','♧'));if(/^(own|other)/.test(key))b.append(node('small',caption.replace('Your card ','').replace('Opponent card ',''),'tutorial-position'));if(!state.review&&currentStep(state).target===key)b.append(node('span',key==='discard'?'Tap to slam':'Tap here ↑','tutorial-tap-marker'));if(key==='own'+state.selected)b.append(node('span','✓ Selected','tutorial-selected-marker'));return b;
  }
  function render(){
  const step=currentStep(state);$('tutorialLesson').value=state.lesson;

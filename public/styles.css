@@ -329,3 +329,12 @@ body.lobby-screen #lobbyView .invite .code-button{color:#fffef5}
 #tutorialFeedback{background:var(--surface);border-left:4px solid var(--ink);padding:12px;margin:12px 0;font-size:14px;line-height:1.5}.tutorial-controls{display:flex;justify-content:space-between;gap:10px;margin-top:12px}.tutorial-controls button{font-size:12px}.tutorial-totals{text-align:center;margin:12px 0 0;font-weight:700}
 @media(max-height:740px){#tutorialDialog{padding:12px}.tutorial-coach{padding:9px}.tutorial-hand{grid-template-columns:repeat(2,49px)}.tutorial-card{width:49px;height:68px}.tutorial-empty{height:68px}.tutorial-piles{margin:8px 0}.tutorial-table{padding:10px}}
 #tutorialDialog [hidden]{display:none!important}
+
+/* A teaching cue is different from an actual card selection. */
+#tutorialDialog .tutorial-target{outline:none;box-shadow:none}
+#tutorialDialog .tutorial-target:focus-visible{outline:2px dashed #b7e5ff;outline-offset:4px}
+#tutorialDialog .tutorial-card.selected{outline:3px solid #efbf55;outline-offset:3px;box-shadow:0 0 0 6px #efbf5522}
+.tutorial-tap-marker,.tutorial-selected-marker{position:absolute;z-index:2;bottom:-9px;left:50%;transform:translateX(-50%);padding:3px 5px;border-radius:5px;font-size:10px;line-height:1.2;font-weight:800;white-space:nowrap;letter-spacing:0;pointer-events:none}
+.tutorial-tap-marker{background:#d9f1ff;color:#123b51;border:1px solid #8bbdd7}
+.tutorial-selected-marker{background:#efbf55;color:#352507}
+.tutorial-hand{row-gap:18px}.tutorial-piles{margin-bottom:23px}.tutorial-action{margin-top:20px}
